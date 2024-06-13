@@ -12,18 +12,10 @@
           - docker
           - docker-compose
 
-    - name: Ensure Docker service is running
-      service:
-        name: docker
-        state: started
-        enabled: yes
-
     - name: Run container
       docker_container:
         name: wartest
-        image: "{{ image }}"
+        image: "registry.gitlab.com/xavki/presentations-jenkins/wartest:latest"
         ports:
           - "8081:8080"
         state: started
-      environment:
-        DOCKER_API_VERSION: "1.40"
