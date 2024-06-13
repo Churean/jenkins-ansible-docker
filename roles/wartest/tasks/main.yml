@@ -1,14 +1,8 @@
-    - name: Remove conflicting packages
-      apt:
-        name: 
-          - containerd
-        state: absent
-        
+      
     - name: Install dependencies
       apt:
         name: 
           - python3-pip
-          - docker.io
         state: present
         update_cache: yes
 
