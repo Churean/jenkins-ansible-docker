@@ -1,17 +1,9 @@
-- name: install wartest
-  hosts: all
-  become: yes
-  become_user: root
-  vars:
-    image: "registry.gitlab.com/xavki/presentations-jenkins/wartest:latest"
-  tasks:
-    - name: Run container
-      docker_container:
-        name: wartest
-        image: "{{ image }}"
-        state: started
-        restart_policy: always
-        published_ports:
-          - "80:80"
-      environment:
-        DOCKER_HOST: "unix:///var/run/docker.sock"
+---
+- name: Run container
+  docker_container:
+    name: wartest
+    image: "{{ image }}"
+    state: started
+    restart_policy: always
+    published_ports:
+      - "80:80"
