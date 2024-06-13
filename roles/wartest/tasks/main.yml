@@ -1,8 +1,8 @@
-
-    - name: Run container
-      docker_container:
-        name: wartest
-        image: "registry.gitlab.com/xavki/presentations-jenkins/wartest:latest"
-        ports:
-          - "8081:8080"
-        state: started
+- name: Run container
+  community.docker.docker_container:
+    name: wartest
+    image: "registry.gitlab.com/xavki/presentations-jenkins/wartest:latest"
+    ports:
+      - "8081:8080"
+    state: started
+    command: "/usr/local/bin/wartest"
