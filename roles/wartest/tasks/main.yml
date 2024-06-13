@@ -1,3 +1,9 @@
+    - name: Remove conflicting packages
+      apt:
+        name: 
+          - containerd
+        state: absent
+        
     - name: Install dependencies
       apt:
         name: 
