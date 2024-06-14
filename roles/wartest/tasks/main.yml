@@ -3,18 +3,39 @@
     update_cache: yes
     upgrade: yes
 
-- name: install pip
+- name: install pip and other dependencies
   apt:
     name: 
       - python3-pip
       - python3-apt
     state: present
 
-- name: ensure pip is installed
-  command: python3 -m pip install --upgrade pip
-  changed_when: false
+- name: install Docker GPG key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
 
-- name: pip install docker-py
+- name: add Docker repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    state: present
+    update_cache: yes
+
+- name: install Docker
+  apt:
+    name: 
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    state: present
+
+- name: ensure Docker is started and enabled
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: install docker-py and docker-compose using pip3
   pip:
     name:
       - docker
