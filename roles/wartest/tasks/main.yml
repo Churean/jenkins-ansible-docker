@@ -10,9 +10,9 @@
       - python3-apt
     state: present
 
-- name: ensure pip is available
-  command: python3 -m ensurepip
-  when: pip_packages.stdout.find('pip') == -1
+- name: ensure pip is installed
+  command: python3 -m pip install --upgrade pip
+  changed_when: false
 
 - name: pip install docker-py
   pip:
