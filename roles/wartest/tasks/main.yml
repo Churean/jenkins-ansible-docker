@@ -1,70 +1,66 @@
 ---
-- name: Install wartest
-  hosts: all
-  become: yes
-  tasks:
-    - name: update and upgrade apt packages
-      apt:
-        update_cache: yes
-        upgrade: dist
+- name: update and upgrade apt packages
+  apt:
+    update_cache: yes
+    upgrade: dist
 
-    - name: install necessary packages
-      apt:
-        name:
-          - python3-pip
-          - python3-apt
-          - apt-transport-https
-          - ca-certificates
-          - curl
-          - software-properties-common
-        state: present
+- name: install necessary packages
+  apt:
+    name: 
+      - python3-pip
+      - python3-apt
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+    state: present
 
-    - name: add Docker GPG key
-      apt_key:
-        url: https://download.docker.com/linux/ubuntu/gpg
-        state: present
+- name: add Docker GPG key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
 
-    - name: add Docker repository
-      apt_repository:
-        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
-        state: present
+- name: add Docker repository
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+    state: present
 
-    - name: update apt cache
-      apt:
-        update_cache: yes
-        force_apt_get: yes
+- name: update apt cache
+  apt:
+    update_cache: yes
+    force_apt_get: yes
 
-    - name: install Docker
-      apt:
-        name: docker-ce
-        state: present
+- name: install Docker
+  apt:
+    name: docker-ce
+    state: present
 
-    - name: ensure Docker is started and enabled
-      service:
-        name: docker
-        state: started
-        enabled: yes
+- name: ensure Docker is started and enabled
+  service:
+    name: docker
+    state: started
+    enabled: yes
 
-    - name: install docker-py, docker-compose, and requests using pip3
-      pip:
-        name:
-          - docker
-          - docker-compose
-          - "requests==2.31.0"
-        executable: pip3
+- name: install docker-py, docker-compose, and requests using pip3
+  pip:
+    name:
+      - docker
+      - docker-compose
+      - "requests==2.31.0"
+    executable: pip3
 
-    - name: check Docker version
-      command: docker --version
-      register: docker_version_output
+- name: check Docker version
+  command: docker --version
+  register: docker_version_output
 
-    - name: display Docker version
-      debug:
-        msg: "Docker version is: {{ docker_version_output.stdout }}"
+- name: display Docker version
+  debug:
+    msg: "Docker version is: {{ docker_version_output.stdout }}"
 
-    - name: run container
-      docker_container:
-        name: wartest
-        image: "{{ image }}"
-        ports: 
-          - "8081:8080"
-        state: started
+- name: run container
+  docker_container:
+    name: wartest
+    image: "{{ image }}"
+    ports: 
+      - "8081:8080"
+    state: started
