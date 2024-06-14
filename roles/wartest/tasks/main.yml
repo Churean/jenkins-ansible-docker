@@ -64,4 +64,4 @@
     state: started
     tls: yes
     tls_verify: yes  # Assurez-vous que cette option est définie si Docker utilise TLS
-    tls_hostname: "docker.domain.com"  # Remplacez par le nom d'hôte TLS si nécessaire
+    tls_hostname: "agent"  # Remplacez par le nom d'hôte TLS si nécessaire
