@@ -1,9 +1,4 @@
 ---
-- name: update and upgrade apt packages
-  apt:
-    update_cache: yes
-    upgrade: dist
-
 - name: install necessary packages
   apt:
     name: 
@@ -48,14 +43,6 @@
       - docker-compose
       - "requests==2.31.0"
     executable: pip3
-
-- name: check Docker version
-  command: docker --version
-  register: docker_version_output
-
-- name: display Docker version
-  debug:
-    msg: "Docker version is: {{ docker_version_output.stdout }}"
 
 - name: run container
   docker_container:
