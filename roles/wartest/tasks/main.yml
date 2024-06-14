@@ -46,22 +46,10 @@
       - docker
       - docker-compose
     executable: pip3
-
-- name: check Docker version
-  command: docker --version
-  register: docker_version_output
-
-- name: display Docker version
-  debug:
-    msg: "Docker version is: {{ docker_version_output.stdout }}"
-
+    
 - name: run container
   docker_container:
     name: wartest
     image: "{{ image }}"
     ports: 
       - "8081:8080"
-    state: started
-    tls: yes
-    tls_verify: yes  # Assurez-vous que cette option est définie si Docker utilise TLS
-    tls_hostname: "agent"  # Remplacez par le nom d'hôte TLS si nécessaire
