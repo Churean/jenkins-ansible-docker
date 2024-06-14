@@ -3,30 +3,32 @@
     update_cache: yes
     upgrade: yes
 
-- name: install pip and other dependencies
+- name: install necessary packages
   apt:
     name: 
       - python3-pip
       - python3-apt
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
     state: present
 
-- name: install Docker GPG key
-  apt_key:
-    url: https://download.docker.com/linux/ubuntu/gpg
-    state: present
+- name: add Docker GPG key
+  command: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 
 - name: add Docker repository
   apt_repository:
-    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
     state: present
+
+- name: update apt cache
+  apt:
     update_cache: yes
 
 - name: install Docker
   apt:
-    name: 
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
+    name: docker-ce
     state: present
 
 - name: ensure Docker is started and enabled
@@ -41,6 +43,14 @@
       - docker
       - docker-compose
     executable: pip3
+
+- name: check Docker version
+  command: docker --version
+  register: docker_version_output
+
+- name: display Docker version
+  debug:
+    msg: "Docker version is: {{ docker_version_output.stdout }}"
 
 - name: run container
   docker_container:
