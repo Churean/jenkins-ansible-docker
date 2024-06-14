@@ -62,5 +62,6 @@
     ports: 
       - "8081:8080"
     state: started
-    tls: yes  # Assurez-vous que cette option est correctement définie si Docker utilise TLS
-
+    tls: yes
+    tls_verify: yes  # Assurez-vous que cette option est définie si Docker utilise TLS
+    tls_hostname: "docker.domain.com"  # Remplacez par le nom d'hôte TLS si nécessaire
