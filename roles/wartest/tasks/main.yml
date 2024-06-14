@@ -15,7 +15,9 @@
     state: present
 
 - name: add Docker GPG key
-  command: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+  shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  args:
+    warn: false
 
 - name: add Docker repository
   apt_repository:
