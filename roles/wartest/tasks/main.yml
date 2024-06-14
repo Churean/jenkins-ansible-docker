@@ -6,7 +6,7 @@
     - name: update and upgrade apt packages
       apt:
         update_cache: yes
-        upgrade: yes
+        upgrade: dist
 
     - name: install necessary packages
       apt:
@@ -32,6 +32,7 @@
     - name: update apt cache
       apt:
         update_cache: yes
+        force_apt_get: yes
 
     - name: install Docker
       apt:
@@ -67,3 +68,4 @@
         ports: 
           - "8081:8080"
         state: started
+
