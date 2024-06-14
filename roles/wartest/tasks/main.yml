@@ -62,3 +62,5 @@
     ports: 
       - "8081:8080"
     state: started
+    tls: yes  # Assurez-vous que cette option est correctement définie si Docker utilise TLS
+
